@@ -1,32 +1,14 @@
 import { logger } from '../utils/logger.js';
 
-
 export const botConfig = {
   // =========================
   // BOT PRESENCE (what users see under the bot name)
   // =========================
-  // `status` options:
-  // - "online"    = green dot
-  // - "idle"      = yellow moon
-  // - "dnd"       = red do-not-disturb
-  // - "invisible" = appears offline
   presence: {
-    // Current online state shown on Discord.
     status: "online",
-
-    // Activity lines shown under the bot name.
-    // `type` number mapping from Discord:
-    // 0 = Playing
-    // 1 = Streaming
-    // 2 = Listening
-    // 3 = Watching
-    // 4 = Custom
-    // 5 = Competing
     activities: [
       {
-        // Text users will see (example: "Playing /help | Titan Bot").
         name: "Made with Hatred",
-        // Activity type number (0 = Playing).
         type: 0, 
       },
     ],
@@ -36,17 +18,9 @@ export const botConfig = {
   // COMMAND BEHAVIOR
   // =========================
   commands: {
-    // Bot owner user IDs (comma-separated in OWNER_IDS env var).
-    // Owners can access owner/admin-level bot commands.
     owners: process.env.OWNER_IDS?.split(",") || [],
-
-    // Default wait time between command uses (in seconds).
     defaultCooldown: 3, 
-
-    // If true, old commands are removed before re-registering.
     deleteCommands: false,
-
-    // Optional server ID used for testing slash commands quickly.
     testGuildId: process.env.TEST_GUILD_ID,
   },
 
@@ -54,63 +28,42 @@ export const botConfig = {
   // APPLICATIONS SYSTEM
   // =========================
   applications: {
-    // Default questions shown when someone fills out an application.
     defaultQuestions: [
       { question: "What is your name?", required: true },
       { question: "How old are you?", required: true },
       { question: "Why do you want to join?", required: true },
     ],
-
-    // Embed colors by application status.
     statusColors: {
       pending: "#FFA500",
       approved: "#00FF00",
       denied: "#FF0000",
     },
-
-    // How long users must wait before submitting another application (hours).
     applicationCooldown: 24, 
-
-    // Auto-delete denied applications after this many days.
     deleteDeniedAfter: 7, 
-
-    // Auto-delete approved applications after this many days.
     deleteApprovedAfter: 30, 
-
-    // Role IDs allowed to manage applications.
-    managerRoles: [], // Will be populated from environment or database
+    managerRoles: [],
   },
 
   // =========================
   // EMBED COLORS & BRANDING
   // =========================
-  // IMPORTANT: This is the SINGLE SOURCE OF TRUTH for all bot colors
   embeds: {
     colors: {
-      // Main brand colors.
       primary: "#336699", 
       secondary: "#2F3136", 
-
-      // Standard status colors for success/error/warning/info messages.
       success: "#57F287", 
       error: "#ED4245", 
       warning: "#FEE75C", 
       info: "#3498DB", 
-
-      // Neutral utility colors.
       light: "#FFFFFF",
       dark: "#202225",
       gray: "#99AAB5",
-
-      // Discord-style palette shortcuts.
       blurple: "#5865F2",
       green: "#57F287",
       yellow: "#FEE75C",
       fuchsia: "#EB459E",
       red: "#ED4245",
       black: "#000000",
-
-      // Feature-specific colors.
       giveaway: {
         active: "#57F287",
         ended: "#ED4245",
@@ -124,8 +77,6 @@ export const botConfig = {
       economy: "#F1C40F",
       birthday: "#E91E63",
       moderation: "#9B59B6",
-
-      // Ticket priority color mapping.
       priority: {
         none: "#95A5A6",
         low: "#3498db",
@@ -133,17 +84,18 @@ export const botConfig = {
         high: "#f1c40f",
         urgent: "#e74c3c",
       },
+      // Добавляем цвета для карт Таро
+      tarot: {
+        majorArcana: "#9B59B6",
+        minorArcana: "#3498DB",
+      }
     },
     footer: {
-      // Default footer text used in bot embeds.
       text: "Titan Bot",
-      // Footer icon URL (null = no icon).
       icon: null,
     },
-    // Default thumbnail URL for embeds (null = no thumbnail).
     thumbnail: null,
     author: {
-      // Optional default embed author block.
       name: null,
       icon: null,
       url: null,
@@ -155,43 +107,24 @@ export const botConfig = {
   // =========================
   economy: {
     currency: {
-      // Currency display name.
       name: "coins",
-      // Plural display name.
       namePlural: "coins",
-      // Currency symbol shown in balances.
       symbol: "$",
     },
-
-    // Starting balance for new users.
     startingBalance: 0,
-
-    // Maximum bank amount before upgrades (if upgrades are used).
     baseBankCapacity: 100000,
-
-    // Daily reward amount.
     dailyAmount: 100,
-
-    // Work command random payout range.
     workMin: 10,
     workMax: 100,
-
-    // Beg command random payout range.
     begMin: 5,
     begMax: 50,
-
-    // Chance to succeed when robbing (0.4 = 40%).
     robSuccessRate: 0.4,
-
-    // Jail time after failed rob (milliseconds).
-    // 3600000 = 1 hour.
     robFailJailTime: 3600000, 
   },
 
   // =========================
   // SHOP SETTINGS
   // =========================
-  // Add shop defaults here when needed.
   shop: {
     
   },
@@ -200,13 +133,8 @@ export const botConfig = {
   // TICKET SYSTEM
   // =========================
   tickets: {
-    // Category ID where new tickets are created (null = no forced category).
     defaultCategory: null,
-
-    // Role IDs allowed to manage/support tickets.
     supportRoles: [],
-
-    // Priority options users/staff can assign.
     priorities: {
       none: {
         emoji: "⚪",
@@ -234,14 +162,8 @@ export const botConfig = {
         label: "Urgent",
       },
     },
-
-    // Default priority for new tickets.
     defaultPriority: "none",
-
-    // Category ID where closed tickets are archived.
     archiveCategory: null,
-
-    // Channel ID where ticket logs are sent.
     logChannel: null,
   },
 
@@ -249,24 +171,12 @@ export const botConfig = {
   // GIVEAWAY SETTINGS
   // =========================
   giveaways: {
-    // Default giveaway duration in milliseconds.
-    // 86400000 = 24 hours.
     defaultDuration: 86400000, 
-
-    // Allowed winner count range.
     minimumWinners: 1,
     maximumWinners: 10,
-
-    // Allowed giveaway duration range in milliseconds.
-    // 300000 = 5 minutes.
     minimumDuration: 300000, 
-    // 2592000000 = 30 days.
     maximumDuration: 2592000000, 
-
-    // Role IDs allowed to host giveaways.
     allowedRoles: [],
-
-    // Role IDs that bypass giveaway restrictions.
     bypassRoles: [],
   },
 
@@ -274,13 +184,8 @@ export const botConfig = {
   // BIRTHDAY SETTINGS
   // =========================
   birthday: {
-    // Role ID given to users on their birthday.
     defaultRole: null,
-
-    // Channel ID where birthday announcements are posted.
     announcementChannel: null,
-
-    // Timezone used to calculate birthday dates.
     timezone: "UTC",
   },
 
@@ -288,85 +193,40 @@ export const botConfig = {
   // VERIFICATION SETTINGS
   // =========================
   verification: {
-    // Message shown when posting the verification panel.
     defaultMessage: "Click the button below to verify yourself and gain access to the server!",
-
-    // Text on the verification button.
     defaultButtonText: "Verify",
-
-    // Automatic verification behavior.
     autoVerify: {
-      // How automatic verification decides who is auto-approved:
-      // - "none"        = everyone is auto-verified immediately
-      // - "account_age" = account must be older than set days
-      // - "server_size" = auto-verify everyone only in smaller servers
       defaultCriteria: "none",
-
-      // Days used when `defaultCriteria` is `account_age`.
       defaultAccountAgeDays: 7,
-
-      // Member count threshold used when `defaultCriteria` is `server_size`.
-      // Example: 1000 means auto-verify if server has fewer than 1000 members.
       serverSizeThreshold: 1000,
-
-      // Allowed safety limits for account-age requirements.
-      // 1 = minimum day, 365 = maximum days.
       minAccountAge: 1,      
       maxAccountAge: 365,    
-
-      // If true, user receives a DM after verification.
       sendDMNotification: true,
-
-      // Human-readable descriptions for each criteria mode.
       criteria: {
         account_age: "Account must be older than specified days",
         server_size: "All users if server has less than 1000 members",
         none: "All users immediately"
       }
     },
-
-    // Minimum time between verification attempts (milliseconds).
-    // 5000 = 5 seconds.
     verificationCooldown: 5000,  
-
-    // Maximum failed attempts allowed inside the time window below.
     maxVerificationAttempts: 3,   
-
-    // Time window for counting attempts (milliseconds).
-    // 60000 = 1 minute.
     attemptWindow: 60000,          
-
-    // In-memory safety limits (helps avoid unbounded memory growth).
     maxCooldownEntries: 10000,
     maxAttemptEntries: 10000,
-    // Cleanup frequency for cooldown/attempt maps (milliseconds).
-    // 300000 = 5 minutes.
     cooldownCleanupInterval: 300000, 
-    // Maximum metadata payload size for audit entries (bytes).
     maxAuditMetadataBytes: 4096,
-    // Maximum number of audit entries kept in memory.
     maxInMemoryAuditEntries: 1000,
-  // If true, log every verification action.
-  logAllVerifications: true,
-  // If true, preserve verification audit history.
-  keepAuditTrail: true,
+    logAllVerifications: true,
+    keepAuditTrail: true,
   },
 
   // =========================
   // WELCOME / GOODBYE MESSAGES
   // =========================
   welcome: {
-    // Welcome template posted when a user joins.
-    // Placeholders: {user}, {server}, {memberCount}
-    defaultWelcomeMessage:
-      "Welcome {user} to {server}! We now have {memberCount} members!",
-    // Goodbye template posted when a user leaves.
-    // Placeholders: {user}, {memberCount}
-    defaultGoodbyeMessage:
-      "{user} has left the server. We now have {memberCount} members.",
-    // Channel ID for welcome messages.
+    defaultWelcomeMessage: "Welcome {user} to {server}! We now have {memberCount} members!",
+    defaultGoodbyeMessage: "{user} has left the server. We now have {memberCount} members.",
     defaultWelcomeChannel: null,
-    // Channel ID for goodbye messages.
     defaultGoodbyeChannel: null,
   },
 
@@ -375,28 +235,21 @@ export const botConfig = {
   // =========================
   counters: {
     defaults: {
-      // Default naming/description templates for counter entries.
       name: "{name} Counter",
       description: "Server {name} counter",
-      // Channel type used for counters (typically "voice").
       type: "voice",
-      // Channel name format. `{count}` is replaced automatically.
       channelName: "{name}-{count}",
     },
     permissions: {
-      // Default denied permissions for the counter channel.
       deny: ["VIEW_CHANNEL"],
-      // Default allowed permissions for the counter channel.
       allow: ["VIEW_CHANNEL", "CONNECT", "SPEAK"],
     },
     messages: {
-      // Default response messages for counter actions.
       created: "✅ Created counter **{name}**",
       deleted: "🗑️ Deleted counter **{name}**",
       updated: "🔄 Updated counter **{name}**",
     },
     types: {
-      // Built-in counter types and how each count is calculated.
       members: {
         name: "👥 Members",
         description: "Total members in the server",
@@ -418,14 +271,141 @@ export const botConfig = {
   },
 
   // =========================
+  // TAROT SYSTEM (НОВАЯ СЕКЦИЯ!)
+  // =========================
+  tarot: {
+    // Включить/выключить систему Таро
+    enabled: true,
+    
+    // 22 старших аркана Таро (Major Arcana)
+    majorArcana: [
+      { id: 0, name: "Шут"},
+      { id: 1, name: "Маг"},
+      { id: 2, name: "Верховная Жрица"},
+      { id: 3, name: "Императрица"},
+      { id: 4, name: "Император"},
+      { id: 5, name: "Иерофант"},
+      { id: 6, name: "Влюблённые"},
+      { id: 7, name: "Колесница"},
+      { id: 8, name: "Сила"},
+      { id: 9, name: "Отшельник"},
+      { id: 10, name: "Колесо Фортуны"},
+      { id: 11, name: "Справедливость"},
+      { id: 12, name: "Повешенный"},
+      { id: 13, name: "Смерть"},
+      { id: 14, name: "Умеренность"},
+      { id: 15, name: "Дьявол"},
+      { id: 16, name: "Башня"},
+      { id: 17, name: "Звезда"},
+      { id: 18, name: "Луна"},
+      { id: 19, name: "Солнце"},
+      { id: 20, name: "Суд"},
+      { id: 21, name: "Мир"}
+    ],
+    
+    // Настройка ролей
+    roles: {
+      // Если true — создаёт роль автоматически, если её нет на сервере
+      autoCreate: true,
+      
+      // Формат названия роли: можно использовать {name} для подстановки названия карты
+      nameFormat: "Таро: {name}",
+      
+      // Цвета для ролей (по умолчанию фиолетовый)
+      defaultColor: "#9B59B6",
+      
+      // Можно ли выдавать несколько карт одному пользователю
+      allowMultipleCards: false,
+      
+      // Отдельная категория для ролей Таро (опционально, null = без категории)
+      category: null,
+      
+      // Права для ролей Таро (null = использовать права по умолчанию)
+      permissions: null
+    },
+    
+    // Приветственное сообщение при выдаче карты
+    welcomeMessage: {
+      enabled: true,
+      // Канал для отправки (null = системный канал сервера)
+      channel: null,
+      // Текст сообщения (поддерживает плейсхолдеры)
+      text: "✨ {user}, карты Таро предсказывают… **{card_name}**!\n> *{card_description}*",
+      // Отправлять в ЛС пользователю
+      sendDM: true
+    },
+    
+    // Система сохранения карт (чтобы при повторном заходе карта не менялась)
+    persistence: {
+      // Использовать базу данных (требуется настройка PostgreSQL)
+      useDatabase: false,
+      // Или просто сохранять в памяти (теряется при перезапуске бота)
+      useMemoryCache: true,
+      // Путь к файлу для сохранения (если не используется БД)
+      jsonFilePath: "./data/tarot-assignments.json"
+    },
+    
+    // Команды для взаимодействия с системой Таро
+    commands: {
+      // Показать свою карту
+      myCard: {
+        enabled: true,
+        name: "mycard",
+        description: "Показать свою карту Таро"
+      },
+      // Показать карту другого пользователя
+      userCard: {
+        enabled: true,
+        name: "usercard",
+        description: "Показать карту Таро пользователя"
+      },
+      // Информация о карте по имени/ID
+      cardInfo: {
+        enabled: true,
+        name: "cardinfo",
+        description: "Получить информацию о карте Таро"
+      },
+      // Список всех карт
+      listCards: {
+        enabled: true,
+        name: "tarotlist",
+        description: "Показать все 22 карты Таро"
+      },
+      // Админ-команда: выдать конкретную карту (требуются права)
+      assignCard: {
+        enabled: true,
+        name: "assigncard",
+        description: "Выдать пользователю конкретную карту Таро",
+        requiredPermission: "ADMINISTRATOR"
+      },
+      // Админ-команда: сбросить карту
+      resetCard: {
+        enabled: true,
+        name: "resetcard",
+        description: "Сбросить карту Таро пользователя",
+        requiredPermission: "ADMINISTRATOR"
+      }
+    },
+    
+    // Логирование событий
+    logging: {
+      // Канал для логов (null = не логировать)
+      channel: null,
+      // Логировать выдачу карт
+      logAssignments: true,
+      // Логировать ошибки
+      logErrors: true
+    }
+  },
+
+  // =========================
   // GENERIC BOT MESSAGES
   // =========================
   messages: {
     noPermission: "You do not have permission to use this command.",
     cooldownActive: "Please wait {time} before using this command again.",
     errorOccurred: "An error occurred while executing this command.",
-    missingPermissions:
-      "I am missing required permissions to perform this action.",
+    missingPermissions: "I am missing required permissions to perform this action.",
     commandDisabled: "This command has been disabled.",
     maintenanceMode: "The bot is currently in maintenance mode.",
   },
@@ -433,41 +413,34 @@ export const botConfig = {
   // =========================
   // FEATURE TOGGLES
   // =========================
-  // Set any feature to `false` to disable it globally.
   features: {
-    // Core systems.
     economy: true,
     leveling: true,
     moderation: true,
     logging: true,
     welcome: true,
-
-    // Community engagement systems.
     tickets: true,
     giveaways: true,
     birthday: true,
     counter: true,
-
-    // Security and self-service systems.
     verification: true,
     reactionRoles: true,
     joinToCreate: true,
-
-    // Utility/quality-of-life modules.
     voice: true,
     search: true,
     tools: true,
     utility: true,
     community: true,
     fun: true,
+    // НОВЫЙ ФЛАГ ДЛЯ ТАРО
+    tarot: true,
   },
 };
 
-
+// Остальные функции (validateConfig, getColor, getRandomColor) остаются без изменений
 export function validateConfig(config) {
   const errors = [];
 
-  
   if (process.env.NODE_ENV !== 'production') {
     logger.debug('Environment variables check:');
     logger.debug('DISCORD_TOKEN exists:', !!process.env.DISCORD_TOKEN);
@@ -486,7 +459,6 @@ export function validateConfig(config) {
     errors.push("Client ID is required (CLIENT_ID environment variable)");
   }
 
-  
   if (process.env.NODE_ENV === 'production') {
     if (!process.env.POSTGRES_HOST) {
       errors.push("PostgreSQL host is required in production (POSTGRES_HOST environment variable)");
@@ -502,7 +474,6 @@ export function validateConfig(config) {
   return errors;
 }
 
-
 const configErrors = validateConfig(botConfig);
 if (configErrors.length > 0) {
   logger.error("Bot configuration errors:", configErrors.join("\n"));
@@ -511,14 +482,11 @@ if (configErrors.length > 0) {
   }
 }
 
-
 export const BotConfig = botConfig;
 
 export function getColor(path, fallback = "#99AAB5") {
-  
   if (typeof path === "number") return path;
   if (typeof path === "string" && path.startsWith("#")) {
-    
     return parseInt(path.replace("#", ""), 16);
   }
   const result = path
@@ -528,7 +496,6 @@ export function getColor(path, fallback = "#99AAB5") {
       botConfig.embeds.colors,
     );
   
-  // Convert the result to integer if it's a hex string
   if (typeof result === "string" && result.startsWith("#")) {
     return parseInt(result.replace("#", ""), 16);
   }
